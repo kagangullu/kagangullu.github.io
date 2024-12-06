@@ -1,0 +1,197 @@
+/* Genel stil */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212;
+    /* Koyu arka plan */
+    margin: 0;
+    padding: 0;
+    color: #E0E0E0;
+    /* Açık gri metin */
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto;
+    padding: 20px;
+    background: #1E1E1E;
+    /* Koyu kutu arka plan */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+
+h1 {
+    text-align: center;
+    color: #E0E0E0;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Tablo stili */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+}
+
+thead {
+    background-color: #333333;
+    /* Koyu başlık arka planı */
+    color: #ffffff;
+}
+
+thead th {
+    padding: 10px;
+    text-align: left;
+    font-size: 16px;
+}
+
+tbody tr {
+    border-bottom: 1px solid #444444;
+    /* Koyu sınır */
+}
+
+tbody tr:hover {
+    background-color: #333333;
+    /* Hover'da daha koyu */
+}
+
+td {
+    padding: 15px 10px;
+    vertical-align: middle;
+    color: #E0E0E0;
+    /* Açık gri metin */
+}
+
+/* Kullanıcı bilgisi ve profil fotoğrafı */
+.user-info {
+    display: flex;
+    align-items: center;
+}
+
+.profile-pic {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 15px;
+    border: 2px solid #007BFF;
+}
+
+tbody td {
+    font-size: 14px;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 10px;
+    }
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+    }
+
+    thead tr {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 10px;
+    }
+
+    td {
+        text-align: right;
+        padding-left: 50%;
+        position: relative;
+    }
+
+    td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        text-align: left;
+        font-weight: bold;
+    }
+
+    .profile-pic {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Yeni doğrulama simgesi */
+.verified-icon {
+    width: 20px;
+    height: 20px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Profil adı tıklanabilir olacak */
+.user-info a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: #E0E0E0;
+    /* Açık gri metin */
+}
+
+.user-info a:hover {
+    color: #007BFF;
+}
+
+.user-info img.profile-pic {
+    border-radius: 50%;
+    border: 2px solid #007BFF;
+    margin-right: 10px;
+}
+
+.user-info a:hover {
+    color: #00BFFF;
+    /* Vurgulama rengi */
+}
+
+/* Modal Stili */
+.modal {
+    display: none;
+    /* Başlangıçta gizli */
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Bulanık arka plan */
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #1E1E1E;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 400px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    border-radius: 10px;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}

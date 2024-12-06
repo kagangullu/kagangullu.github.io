@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Influencers</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Üst Kısım -->
+        <div class="header">
+            <div>
+                <h1>Influencers</h1>
+                <p class="subtitle">{{ users|length }} users found</p>
+            </div>
+            <button class="filter-button" onclick="openFilterModal()">Filter</button>
+        </div>
+
+        <!-- Tablo Alanı -->
+        <div class="table-container">
+            <table>
+                <tbody>
+                    {% for user in users %}
+                    <tr class="user-row" data-checked="{{ user.checked }}"
+                        onclick="window.open('https://instagram.com/{{ user.Username }}', '_blank')">
+                        <td class="user-info">
+                            <span class="user-name">{{ user.Full_name }}</span>
+                            {% if user.Is_verified == 'TRUE' %}
+                            <img src="{{ url_for('static', filename='images/verified.png') }}" alt="Verified"
+                                class="verified-icon">
+                            {% endif %}
+                        </td>
+                        <td class="checkbox-container">
+                            <input type="checkbox" id="checkbox-{{ loop.index }}" onclick="event.stopPropagation()">
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Filter Modal -->
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFilterModal()">&times;</span>
+            <h2>Filter Users</h2>
+            <div>
+                <label for="verifiedOnly">Verified Accounts:</label>
+                <input type="checkbox" id="verifiedOnly">
+            </div>
+            <div>
+                <label for="unverifiedOnly">Unverified Accounts:</label>
+                <input type="checkbox" id="unverifiedOnly">
+            </div>
+            <div>
+                <label for="checkedOnly">Checked Accounts:</label>
+                <input type="checkbox" id="checkedOnly">
+            </div>
+            <div>
+                <label for="uncheckedOnly">Unchecked Accounts:</label>
+                <input type="checkbox" id="uncheckedOnly">
+            </div>
+            <button onclick="applyFilter()">Apply Filter</button>
+        </div>
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='js/app.js') }}"></script>
+    <script>
+        // Modal kontrol işlevleri
+        function openFilterModal() {
+            document.getElementById('filterModal').style.display = 'block';
+        }
+
+        function closeFilterModal() {
+            document.getElementById('filterModal').style.display = 'none';
+        }
+
+        // Filtreyi uygula
+        function applyFilter() {
+            const verifiedOnly = document.getElementById('verifiedOnly').checked;
+            const unverifiedOnly = document.getElementById('unverifiedOnly').checked;
+            const checkedOnly = document.getElementById('checkedOnly').checked;
+            const uncheckedOnly = document.getElementById('uncheckedOnly').checked;
+
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                const isVerified = row.querySelector('.user-info img.verified-icon') !== null;
+                const isChecked = row.dataset.checked === 'true';
+
+                let showRow = true;
+
+                // Filtre şartlarını kontrol et
+                if (verifiedOnly && !isVerified) showRow = false;
+                if (unverifiedOnly && isVerified) showRow = false;
+                if (checkedOnly && !isChecked) showRow = false;
+                if (uncheckedOnly && isChecked) showRow = false;
+
+                // Satırı göster ya da gizle
+                row.style.display = showRow ? '' : 'none';
+            });
+
+            closeFilterModal(); // Modalı kapat
+        }
+    </script>
+</body>
+
+</html>
