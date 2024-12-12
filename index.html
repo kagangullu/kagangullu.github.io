@@ -11,10 +11,14 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Influencers</h1>
-            <p class="subtitle" id="user-count">Loading...</p>
+            <div>
+                <h1>Influencers</h1>
+                <p class="subtitle">
+                    <span id="userCount">{{ users.length }} users found</span>
+                </p>
+            </div>
+            <button class="filter-button" onclick="openFilterModal()">Filter</button>
         </div>
-
         <div class="table-container">
             <table>
                 <tbody id="user-table">
@@ -23,6 +27,23 @@
             </table>
         </div>
     </div>
+
+    <div id="filterModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeFilterModal()">&times;</span>
+            <h2>Filter Users by Checkbox Status</h2>
+            <div>
+                <label for="checkedOnly">Checked Accounts (True):</label>
+                <input type="checkbox" id="checkedOnly">
+            </div>
+            <div>
+                <label for="uncheckedOnly">Unchecked Accounts (False):</label>
+                <input type="checkbox" id="uncheckedOnly">
+            </div>
+            <button onclick="applyFilter()">Apply Filter</button>
+        </div>
+    </div>
+
 
     <!-- Firebase SDK -->
     <script type="module">
@@ -2859,10 +2880,31 @@
 `;
 
                 // Satıra tıklama olayını ekle
+                // Satıra tıklama olayını ekle
                 row.addEventListener('click', (event) => {
                     // Checkbox'a tıklama durumunda bağlantıya gitmeyi engelle
                     if (event.target.tagName.toLowerCase() !== 'input') {
-                        window.open(`https://instagram.com/${user.Username}`, '_blank');
+                        const username = user.Username;
+
+                        // Instagram uygulamasını açmak için URL
+                        const appUrl = `instagram://user?username=${username}`;
+                        const webUrl = `https://instagram.com/${username}`;
+
+                        // Windows cihazı kontrol et
+                        const isWindows = navigator.userAgent.includes('Windows');
+
+                        if (isWindows) {
+                            // Windows için uygulamayı açmayı dene
+                            window.location.href = appUrl;
+
+                            // Belirli bir süre içinde uygulama açılmazsa web sayfasına yönlendir
+                            setTimeout(() => {
+                                window.open(webUrl, '_blank');
+                            }, 1000);
+                        } else {
+                            // Diğer cihazlar için web sayfasını aç
+                            window.open(webUrl, '_blank');
+                        }
                     }
                 });
                 // Checkbox olayını ekle

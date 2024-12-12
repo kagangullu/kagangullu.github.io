@@ -71,3 +71,34 @@ function saveCheckboxState(username, isChecked) {
         .then(() => console.log("Başarıyla kaydedildi:", username, isChecked))
         .catch(error => console.error("Hata:", error));
 }
+
+// Modal kontrol işlevleri
+function openFilterModal() {
+    document.getElementById('filterModal').style.display = 'block';
+}
+
+function closeFilterModal() {
+    document.getElementById('filterModal').style.display = 'none';
+}
+
+// Filtreyi uygula
+function applyFilter() {
+    const checkedOnly = document.getElementById('checkedOnly').checked;
+    const uncheckedOnly = document.getElementById('uncheckedOnly').checked;
+
+    const rows = document.querySelectorAll('tbody tr');
+    rows.forEach(row => {
+        const isChecked = row.dataset.checked === 'true'; // Checkbox durumu
+
+        let showRow = true;
+
+        // Filtre şartlarını kontrol et
+        if (checkedOnly && !isChecked) showRow = false;
+        if (uncheckedOnly && isChecked) showRow = false;
+
+        // Satırı göster ya da gizle
+        row.style.display = showRow ? '' : 'none';
+    });
+
+    closeFilterModal(); // Modalı kapat
+}
